@@ -1,0 +1,78 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome to #{title}
+    
+    
+    div(class="teampicker-container")
+        div(id="teampicker")
+            div(class="pitch")
+                div(class="tile tile--pitch tile--team-one")
+                    p Team One
+                    div(class="tile__list")
+                        
+                div(class="tile tile--pitch tile--team-two")
+                    p Team Two
+                    div(class="tile__list")
+                    
+            div(class="tile tile--players players")
+                div(class="tile__list")
+                    each player, i in playerlist
+                        div.playername= player.playername 
+                    
+                            
+        button(class="submit-win", data-toggle="modal", data-target="#myModal") Submit Result           
+        
+    div(class="modal fade", id="myModal")
+        div(class="modal-dialog")
+            p Check the team is correct before submitting the result
+            div.teamone-modal
+                
+            div.teamtwo-modal
+                
+            button TEAM 1 WON
+            button TEAM 2 WON
+         
+         
+  
+    table(data-toggle="table", id="table", data-detail-view="true", data-detail-formatter="detailFormatter", data-url="/players/playerslist.json")
+        thead
+            tr(class="row--heading")
+                th(class="table-heading") Position
+                th(class="table-heading", data-sortable="true", data-field="playername") Name
+                th(class="table-heading", data-sortable="true", data-field="gamesplayed") GP
+                //-  th(class="table-heading") Img
+                th(class="table-heading", data-sortable="true", data-field="totalpoints") TP
+                th(class="table-heading", data-sortable="true", data-field="averagepoints") AP
+                th(class="table-heading", data-sortable="true", data-field="averagesubtractedpoints") ASP
+        
+        tbody(class="table-content")            
+            each player, i in playerlist     
+                tr(class="row--player")
+                    td(class="table-value")=  i + 1
+                    td(class="table-value")=  player.playername 
+                    td(class="table-value")=  player.gamesplayed  
+                    td(class="table-value")=  player.totalpoints
+                    td(class="table-value")=  player.totalpoints / player.gamesplayed
+                    td(class="table-value")=  player.averagesubtractedpoints
+    
+    //- button#btnUpdateUser Add Update
+    
+    //- // ADD USER
+    //- h2 Add Player
+    //-     #addUser
+    //-         fieldset
+    //-             input#inputUserName(type='text', placeholder='Player Name')
+    //-             input#inputUserEmail(type='text', placeholder='Games Played')
+    //-             br
+    //-             input#inputUserFullname(type='text', placeholder='Total Points')
+    //-             input#inputUserAge(type='text', placeholder='Average Points')
+    //-             br
+    //-             input#inputUserLocation(type='text', placeholder='Average Subtracted Points')
+    //-             br
+    //-             button#btnAddUser Add User
+    
+
+      
+    

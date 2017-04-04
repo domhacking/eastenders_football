@@ -1,0 +1,16 @@
+[
+    {
+        "playername" : "Dominic Hacking",
+        "gamesplayed": 0,
+        "lost" : 0,
+        "won" : 0,
+        "draw" : 0,
+        "totalpoints": 0,
+        "averagesubtractedpoints" : 0,
+        "averagepoints" : 0,
+    }
+
+]
+
+/*"img" : */
+/*"champion" : []*/

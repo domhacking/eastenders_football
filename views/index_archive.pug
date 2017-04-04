@@ -31,7 +31,7 @@ block content
                 div(class="tile tile--players players")
                     div(id="bench")
                         each player, i in playerlist
-                            div(class='playername', data-id=player._id )= player.playername
+                            div(class='playername', data-attr=player._id )= player.playername
                                 //- p= player.playername 
                                 //- img(src="./images/cage.png")
                         
@@ -76,7 +76,7 @@ block content
                         td(class="table-value")=  player.averagesubtractedpoints
         
             
-        //- h2 Hall of Fame
+        h2 Hall of Fame
             div.container
                 div(class="carousel slide", data-ride="carousel")
                     div(class="carousel-inner")

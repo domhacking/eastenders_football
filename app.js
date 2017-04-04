@@ -12,10 +12,15 @@ var monk = require('monk');
 var db = monk('localhost:27017/eastenders_football');
 
 
+
 var index = require('./routes/index');
 var players = require('./routes/players');
 
 var app = express();
+
+
+var cors = require('cors');
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +30,7 @@ app.set('view engine', 'pug');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -33,6 +38,12 @@ app.use(function(req,res,next){
     req.db = db;
     next();
 });
+
+app.set('port', process.env.PORT || 3000);
+var server = app.listen(app.get('port'), function() {
+  console.log('Express server listening on port ' + server.address().port);
+});
+
 
 app.use('/', index);
 app.use('/players', players);

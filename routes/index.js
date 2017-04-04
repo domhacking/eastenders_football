@@ -14,6 +14,16 @@ router.get('/', function(req, res, next) {
   });
 });
 
+// router.get('/api', function(req, res, next) {
+//     var db = req.db;
+//
+//     var collection = db.get('playerlist');
+//
+//     collection.find({},{},function(e,docs){
+//       res.send( docs );
+//   });
+// });
+
 
 
 module.exports = router;

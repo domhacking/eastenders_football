@@ -1,17 +1,4 @@
 (function(){
-
-
-	// window.App = {};
-	// //
-	// $.get('/api', function(data){
-	// 	App.players = data;
-	// 	app();
-	// });
-	//
-	//
-	// function app(){
-	//
-	// }
 	var playersObject = {};
 
 	$.get('/players/playerslist', function(data){
@@ -27,10 +14,13 @@
 		var teamOnePlayers;
 		var teamTwoPlayers;
 
+
+		displayTeam();
+
 		// Check to see which players have been selected on each team
 		function queryTeams(){
-			teamOnePlayers = document.querySelectorAll('.tile--team-one .tile__list .playername');
-			teamTwoPlayers = document.querySelectorAll('.tile--team-two .tile__list .playername');
+			teamOnePlayers = document.querySelectorAll('.tile--team-one .tile__list .player .playername');
+			teamTwoPlayers = document.querySelectorAll('.tile--team-two .tile__list .player .playername');
 
 			var modalTeamListOne = '';
 			var modalTeamListTwo = '';
@@ -105,9 +95,6 @@
 				})
 			});
 
-
-			console.log(typeof(playersObject[0].gamesplayed));
-
 			$.ajax({
 				url: '/players/resultupdate', // your api url
 				type: 'PUT', // method is any HTTP method
@@ -118,7 +105,6 @@
 					console.log('database updated', d);
 				}
 			})
-
 		};
 
 
@@ -137,33 +123,106 @@
 		var bench = document.getElementById('bench');
 		var picked = document.getElementById('picked');
 
-
-		Sortable.create(bench, {
+		Sortable.create(el, {
 			animation: 150,
-			draggable: '.playername',
+			draggable: '.player',
 			group:{
 				name:'bench',
 				put: 'circle'
-			}
+			},
 		});
 
+		console.log();
+
 		[].forEach.call(picked.getElementsByClassName('circle'), function (circle){
+			console.log(circle);
 
 			Sortable.create(circle, {
+				draggable: '.player',
 				group: {
 					name: 'circle',
 					put: function(to){
 						return to.el.children.length < 1;
 					}
 				},
-
 				animation: 150
 			});
 		});
 
 
+		function saveTeams(){
+			var cirleChild = document.querySelectorAll('.player');
+
+			cirleChild.forEach(function(playerElement){
+				var areaId = playerElement.parentNode.parentNode.id
+				var parentClass = playerElement.parentNode.className
+				var playerId = playerElement.dataset.id
+
+				// console.log('areaId', areaId, 'parentClass', parentClass);
+
+				var savingPostions = {
+					_id : playerId,
+					currentposition:{
+						position: parentClass,
+						team: areaId
+					}
+				}
+
+				$.ajax({
+					url: '/players/savepositions', // your api url
+					type: 'PUT', // method is any HTTP method
+					data: savingPostions,
+					success: function(d) {
+						console.log('database updated', d);
+					}
+				})
+			})
+		}
+
+
+
+
+		function displayTeam(){
+			for ( var i = 0; i < playersObject.length; i++ ){
+				var player = playersObject[i];
+				// console.log(player);
+				var currentpositionTeam = player.currentposition.team;
+				var currentpositionPosition = player.currentposition.position;
+
+				var group = document.getElementById(currentpositionTeam);
+
+				var playerElementParent = document.createElement("div");
+				playerElementParent.className = currentpositionPosition;
+
+				var playerElement = document.createElement("div");
+				playerElement.className = "player"
+
+				var imagesElement = document.createElement("div");
+				imagesElement.className = 'img-container';
+				imagesElement.style.backgroundImage = "url('./images/cage.png')";
+
+				var playernameElement = document.createElement("p");
+				playernameElement.className = 'playername'
+				playernameElement.innerHTML = player.playername;
+
+
+				playerElement.appendChild(imagesElement);
+				playerElement.appendChild(playernameElement);
+
+				playerElementParent.appendChild(playerElement);
+
+				// temp.innerHTML = "<div class='" + currentpositionPosition + "'><div class='player'><div class='img-container' style='background-image:url(./images/cage.png)'></div><p class='playername'>" + player.playername + "</p></div></div>"
+
+				group.appendChild(playerElement);
+
+			}
+		}
+
+
 		$('.submit-win').on('click', queryTeams);
+		$('.save-team').on('click', saveTeams);
 		$('.result').on('click', updateResult);
+		$('.return-to-bench').on('click', bench);
 
 
 
@@ -209,5 +268,17 @@
 		// };
 
 		// $('#btnAddUser').on('click', addUser);
+
+		// window.App = {};
+		// //
+		// $.get('/api', function(data){
+		// 	App.players = data;
+		// 	app();
+		// });
+		//
+		//
+		// function app(){
+		//
+		// }
 	}
 })()

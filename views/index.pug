@@ -12,7 +12,7 @@ block content
                 div(class="pitch" id="picked")
                     div(class="tile tile--pitch tile--team-one")
                         p(class="team-name") Team One
-                        div(class="tile__list")
+                        div(class="tile__list" id="teamOne")
                             div(class="circle circle--gk")
                             div(class="circle circle--def")
                             div(class="circle circle--lefmid")
@@ -21,22 +21,27 @@ block content
                             
                     div(class="tile tile--pitch tile--team-two")
                         p(class="team-name") Team Two
-                        div(class="tile__list")
+                        div(class="tile__list" id="teamTwo")
                             div(class="circle circle--gk")
                             div(class="circle circle--def")
                             div(class="circle circle--lefmid")
                             div(class="circle circle--rigmid")
                             div(class="circle circle--for")
                         
-                div(class="tile tile--players players")
-                    div(id="bench")
-                        each player, i in playerlist
-                            div(class='playername', data-id=player._id )= player.playername
-                                //- p= player.playername 
-                                //- img(src="./images/cage.png")
+                    div(class="tile tile--players players")
+                        p(class="team-name") Bench
+                        div(id="bench")
+                            //- each player, i in playerlist
+                                div(class="circle circle--bench")
+                                    div(class='player', data-id=player._id )
+                                        div(class="img-container", style='background-image: url("./images/cage.png")') 
+                                        //- div(class="img-container", style='background-image:url(' + player.img + ')')
+                                        p(class="playername")= player.playername 
                         
                                 
             button(class="submit-win", data-toggle="modal", data-target="#myModal") Submit Result           
+            button(class="save-team") Save result           
+            button(class="bench") Return to bench           
             
         div(class="modal fade", id="myModal")
             div(class="modal-dialog")
@@ -74,8 +79,8 @@ block content
                         td(class="table-value")=  player.totalpoints
                         td(class="table-value")=  player.totalpoints / player.gamesplayed
                         td(class="table-value")=  player.averagesubtractedpoints
+                            
         
-            
         //- h2 Hall of Fame
             div.container
                 div(class="carousel slide", data-ride="carousel")

@@ -94,6 +94,11 @@ h1{
     position: absolute;
 }
 
+.circle--bench{
+    position: relative;
+    display: inline-block;
+}
+
 .circle--gk{
     top: 50%;
     transform: translateY(-50%);
@@ -132,9 +137,29 @@ h1{
     border-radius: 50%;
 }*/
 
-.playername img{
+.player{
+    display: inline-block;
+    /*margin: 5px 10px;*/
+}
+
+.player .img-container{
     height: 80px;
     width: 80px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: 150%;
+
+}
+
+.img-container img{
+    height: 80px;
+    width: 80px;
+    /*left: -50%;*/
+    /*position: absolute;*/
+}
+
+.player p{
+    text-align: center;
 }
 
 

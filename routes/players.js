@@ -16,7 +16,7 @@ router.get('/playerslist', function(req, res, next) {
 
 
 /*
- * POST to adduser.
+ * Update Results
  */
 router.put('/resultupdate', function(req, res) {
     var db = req.db;
@@ -28,9 +28,8 @@ router.put('/resultupdate', function(req, res) {
         });
     });
 
-    res.send();
+    res.send('non');
 })
-
 
 
 /*
@@ -45,6 +44,31 @@ router.post('/addplayer', function(req, res) {
         );
     });
 });
+
+/*
+ * Update Results
+ */
+router.put('/savepositions', function(req, res) {
+    var db = req.db;
+    var collection = db.get('playerlist');
+    var player = req.body;
+
+    collection.update(
+        { _id: player._id },
+        {
+            $set: {
+                currentposition : {
+                    team : player.currentposition.team,
+                    position : player.currentposition.position
+                }
+            }
+        }, function(err, result){
+            console.log(err, 'res', result);
+        }
+    )
+    res.send('non');
+})
+
 
 
 

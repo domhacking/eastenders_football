@@ -6,18 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var $ = require('jquery');
 var sortable = require('sortablejs');
+var Grid = require('gridfs-stream');
 
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/eastenders_football');
 
-
+var gfs = Grid(db, mongo);
 
 var index = require('./routes/index');
 var players = require('./routes/players');
 
 var app = express();
-
 
 var cors = require('cors');
 app.use(cors());
